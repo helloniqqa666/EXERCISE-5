@@ -1,12 +1,13 @@
+// components/TodoList.tsx
 import React, { useState } from 'react';
-import { useTodoList } from "@/context/TodoContext";
+import { useTodoList } from '@/context/TodoContext';
 
-const TodoList = () => {
+const TodoList: React.FC = () => {
   const { tasks, setTasks, completed, setCompleted } = useTodoList();
 
-  const [newTask, setNewTask] = useState('');
-  const [editingIndex, setEditingIndex] = useState(null);
-  const [editTask, setEditTask] = useState('');
+  const [newTask, setNewTask] = useState<string>('');
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editTask, setEditTask] = useState<string>('');
 
   const addTask = () => {
     if (newTask.trim()) {
@@ -15,7 +16,7 @@ const TodoList = () => {
     }
   };
 
-  const startEditing = (index) => {
+  const startEditing = (index: number) => {
     setEditingIndex(index);
     setEditTask(tasks[index]);
   };
@@ -28,14 +29,14 @@ const TodoList = () => {
   const updateTask = () => {
     if (editTask.trim()) {
       const updatedTasks = [...tasks];
-      updatedTasks[editingIndex] = editTask;
+      updatedTasks[editingIndex as number] = editTask;
       setTasks(updatedTasks);
       setEditingIndex(null);
       setEditTask('');
     }
   };
 
-  const removeTask = (index) => {
+  const removeTask = (index: number) => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
@@ -43,10 +44,10 @@ const TodoList = () => {
     setEditTask('');
   };
 
-  const complete = (index) => {
+  const complete = (index: number) => {
     setCompleted([...completed, tasks[index]]);
     removeTask(index);
-  }
+  };
 
   return (
     <div className="bg-gray-200 p-4 rounded-md max-w-md mx-auto mt-8">
